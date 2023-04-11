@@ -1,30 +1,21 @@
 import configparser
-import psycopg2
-from contextlib import closing
-
-# Initialize the ConfigParser
-config = configparser.ConfigParser()
+from sqlalchemy import create_engine
 
 # Read the config.ini file
+config = configparser.ConfigParser()
 config.read('config.ini')
 
-# Get the connection details from the 'database' section
-dbname = config.get('database', 'dbname')
-user = config.get('database', 'user')
-password = config.get('database', 'password')
-host = config.get('database', 'host')
-port = config.get('database', 'port')
+# Get the PostgreSQL settings from the config.ini file
+pg_settings = config['database']
+host = pg_settings['host']
+port = pg_settings['port']
+dbname = pg_settings['dbname']
+user = pg_settings['user']
+password = pg_settings['password']
 
+# Create the connection string for the PostgreSQL database
+# different backend can be found here = https://docs.sqlalchemy.org/en/20/core/engines.html
+connection_string = f'postgresql+psycopg2://{user}:{password}@{host}:{port}/{dbname}'
 
-def get_db_connection():
-    connection = psycopg2.connect(
-        dbname=dbname,
-        user=user,
-        password=password,
-        host=host,
-        port=port
-    )
-    cursor = connection.cursor()
-    
-    return connection, cursor
-
+# Create the SQLAlchemy engine
+engine = create_engine(connection_string)

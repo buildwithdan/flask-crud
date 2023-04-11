@@ -21,7 +21,7 @@
     <table>
       {{ data }}
     </table>
-
+    <br />
     <table>
       {{ data2 }}
     </table>
@@ -63,23 +63,40 @@
 
     <br />
 
-    <div class="container bg-light">
+    <div class="container bg-light text-black">
       <h1>Table Loop</h1>
       <table class="table table-striped">
         <thead>
           <tr>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Email</th>
+            <th>Bounty Target</th>
+            <th>Bounty Amount</th>
+            <th>Bounty Hunter</th>
+            <th>Published Date</th>
             <th scope="col">Actions</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          {% for row in data2.itertuples() %}
+          <tr>
+            <td>{{ row.bounty_target }}</td>
+            <td>{{ row.bounty_amount }}</td>
+            <td>{{ row.bounty_hunter }}</td>
+            <td>{{ row.published_date }}</td>
+            <td>
+              <button class="btn btn-primary btn-sm">Edit</button>
+              <button class="btn btn-danger btn-sm">Delete</button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
       </table>
     </div>
 
     <br />
-    <div class="container">
+    <table>
+      {{ data2 }}
+    </table>
+    <!-- <div class="container">
       <h1 class="my-4">SQL Table Data</h1>
       <table class="table table-striped bg-dark text-white">
         <thead>
@@ -101,7 +118,7 @@
           {% endfor %}
         </tbody>
       </table>
-    </div>
+    </div> -->
 
     <!-- Editable table -->
     <div class="card">

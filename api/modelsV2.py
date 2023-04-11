@@ -1,6 +1,9 @@
 import configparser
 import psycopg2
 from contextlib import closing
+from config import engine
+from sqlalchemy.orm import sessionmaker
+import pandas as pd
 
 # Initialize the ConfigParser
 config = configparser.ConfigParser()
@@ -16,38 +19,38 @@ host = config.get('database', 'host')
 port = config.get('database', 'port')
 
 
-def get_db_connection():
-    connection = psycopg2.connect(
-        dbname=dbname,
-        user=user,
-        password=password,
-        host=host,
-        port=port
-    )
-    cursor = connection.cursor()
+# def get_db_connection():
+#     connection = psycopg2.connect(
+#         dbname=dbname,
+#         user=user,
+#         password=password,
+#         host=host,
+#         port=port
+#     )
+#     cursor = connection.cursor()
     
-    return connection, cursor
-    # this is in a tuple 0 and 1
-    # if you want to call these you can use 
-    #
+#     return connection, cursor
+#     # this is in a tuple 0 and 1
+#     # if you want to call these you can use 
+#     #
 
 
-def selectTable2():
-    with closing(get_db_connection()[0]) as connection:
-        with connection.cursor() as cursor:
-            # Define query
-            query = "SELECT * FROM public.bounties3"
+# def selectTable2():
+#     with closing(get_db_connection()[0]) as connection:
+#         with connection.cursor() as cursor:
+#             # Define query
+#             query = "SELECT * FROM public.bounties3"
 
-            # Execute query
-            cursor.execute(query)
+#             # Execute query
+#             cursor.execute(query)
 
-            # Fetch all rows from the result
-            rows = cursor.fetchall()
+#             # Fetch all rows from the result
+#             rows = cursor.fetchall()
 
-            print(rows)
+#             print(rows)
 
-            # Return the fetched rows
-            return rows
+#             # Return the fetched rows
+#             return rows
 
 def selectTable():
     # Connect to the database using psycopg2
@@ -73,6 +76,20 @@ def selectTable():
             # Return the fetched rows
             return rows
 
+def selectTable2():
+    # Define query
+    query = "SELECT * FROM public.bounties3"
+
+    # Read the SQL query into a pandas DataFrame using the SQLAlchemy engine
+    df = pd.read_sql_query(query, engine)
+
+    html_table = df.to_html(index=False, classes="my-table")
+    
+    # Return the DataFrame
+    
+    # Print the DataFrame
+    print(df)
+    return df
 
 if __name__ == '__main__':
     selectTable()
