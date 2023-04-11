@@ -4,13 +4,220 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bootstrap Modal Example</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}" />
     <title>Document</title>
   </head>
 
-  <body>
+  <body class="text-secondary">
     <h1>Suck a duck Mandalorian!</h1>
     <table>
       {{ data }}
     </table>
+
+    <table>
+      {{ data2 }}
+    </table>
+
+    <div class="container">
+      <h1 class="my-4">SQL Table Data</h1>
+      <table class="table table-striped bg-dark text-white">
+        <thead>
+          <tr>
+            <th>Bounty Target</th>
+            <th>Bounty Amount</th>
+            <th>Bounty Hunter</th>
+            <th>Published Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in data2 %}
+          <tr>
+            <td>{{ row.bounty_target }}</td>
+            <td>{{ row.bounty_amount }}</td>
+            <td>{{ row.bounty_hunter }}</td>
+            <td>{{ row.published_date }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Editable table -->
+    <div class="card">
+      <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
+        Editable table
+      </h3>
+      <div class="card-body">
+        <div id="table" class="table-editable">
+          <span class="table-add float-right mb-3 mr-2"
+            ><a href="#!" class="text-success"
+              ><i class="fas fa-plus fa-2x" aria-hidden="true"></i></a
+          ></span>
+          <table
+            class="table table-bordered table-responsive-md table-striped text-center">
+            <thead>
+              <tr>
+                <th class="text-center">Bounty Target</th>
+                <th class="text-center">Bounty Target</th>
+                <th class="text-center">Bounty Target</th>
+                <th class="text-center">Bounty Target</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="pt-3-half" contenteditable="true">Aurelia Vega</td>
+                <td class="pt-3-half" contenteditable="true">30</td>
+                <td class="pt-3-half" contenteditable="true">Deepends</td>
+                <td class="pt-3-half" contenteditable="true">Spain</td>
+
+                <td>
+                  <span class="table-remove"
+                    ><button
+                      type="button"
+                      class="btn btn-danger btn-rounded btn-sm my-0">
+                      Remove
+                    </button></span
+                  >
+                </td>
+              </tr>
+              <!-- This is our clonable table line -->
+              <tr>
+                <td class="pt-3-half" contenteditable="true">Guerra Cortez</td>
+                <td class="pt-3-half" contenteditable="true">45</td>
+                <td class="pt-3-half" contenteditable="true">Insectus</td>
+                <td class="pt-3-half" contenteditable="true">USA</td>
+
+                <td>
+                  <span class="table-remove"
+                    ><button
+                      type="button"
+                      class="btn btn-danger btn-rounded btn-sm my-0">
+                      Remove
+                    </button></span
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- Editable table -->
+
+    <!-- Button to trigger the modal -->
+    <br />
+    <table
+      id="my_table_id"
+      data-url="data/url.json"
+      data-id-field="id"
+      data-editable-emptytext="Default empty text."
+      data-editable-url="/my/editable/update/path">
+      <thead>
+        <tr>
+          <th
+            class="col-md-1"
+            data-field="id"
+            data-sortable="true"
+            data-align="center">
+            #
+          </th>
+          <th class="col-md-4" data-field="name" data-editable="true">Name</th>
+          <th
+            class="col-md-7"
+            data-field="description"
+            data-editable="true"
+            data-editable-emptytext="Custom empty text.">
+            Description
+          </th>
+        </tr>
+      </thead>
+    </table>
+
+    <br />
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-toggle="modal"
+      data-target="#myModal">
+      Open Modal
+    </button>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="myModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Bounty Details</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  placeholder="Enter name" />
+              </div>
+              <div class="form-group">
+                <label for="bounty_amount">Bounty Amount</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="bounty_amount"
+                  placeholder="Enter bounty amount" />
+              </div>
+              <div class="form-group">
+                <label for="published_date">Published Date</label>
+                <input type="date" class="form-control" id="published_date" />
+              </div>
+              <div class="form-group">
+                <label for="assigned_to">Assigned To</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="assigned_to"
+                  placeholder="Enter assignee" />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal">
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
+  <!-- jQuery and Bootstrap JS dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="extensions/editable/bootstrap-table-editable.js"></script>
 </html>

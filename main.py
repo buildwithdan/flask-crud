@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from models import createDB,insertData, readData,updateData
-from modelsV2 import selectTable
+from modelsV2 import selectTable, selectTable2
 
 app = Flask(__name__)
 
@@ -14,7 +14,8 @@ app = Flask(__name__)
 @app.route("/")
 def base():
     data = selectTable()
-    return render_template("baseLayout.html",data=data)
+    data2 = selectTable2()
+    return render_template("baseLayout.html",data=data, data2=data2)
 
 
 if __name__ == '__main__':
