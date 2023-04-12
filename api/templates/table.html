@@ -3,6 +3,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
+        <th>Contract_ID</th>
         <th>Bounty Target</th>
         <th>Bounty Amount</th>
         <th>Bounty Hunter</th>
@@ -13,6 +14,7 @@
     <tbody>
       {% for row in data2.itertuples() %}
       <tr>
+        <td>{{ row.id }}</td>
         <td>{{ row.bounty_target }}</td>
         <td>{{ row.bounty_amount }}</td>
         <td>{{ row.bounty_hunter }}</td>
