@@ -1,0 +1,41 @@
+<div class="container bg-light text-black">
+  <h1>Table Loop</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Bounty Target</th>
+        <th>Bounty Amount</th>
+        <th>Bounty Hunter</th>
+        <th>Published Date</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in data2.itertuples() %}
+      <tr>
+        <td>{{ row.bounty_target }}</td>
+        <td>{{ row.bounty_amount }}</td>
+        <td>{{ row.bounty_hunter }}</td>
+        <td>{{ row.published_date }}</td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary btn-sm"
+            data-toggle="modal"
+            data-target="#editModal-{{ row.id }}">
+            Edit
+          </button>
+          <!-- Delete button to open the modal -->
+          <button
+            type="button"
+            class="btn btn-danger btn-sm"
+            data-toggle="modal"
+            data-target="#deleteModal-{{ row.id }}">
+            Delete
+          </button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
