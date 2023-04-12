@@ -11,11 +11,20 @@ app = Flask(__name__)
 # updateData()
 
 
-@app.route("/")
-def base():
-    data = selectTable()
-    data2 = selectTable2()
+@app.route("/", methods=["POST","GET"])
+def home():
+    if request.method == "POST":
+        bountryTarget = request.form["inputBountyTarget"]
+        rowId = request.form["rowID"]
+        print(bountryTarget)
+        
+        
+        return redirect(url_for("home"))
+    else:
+        data = selectTable()
+        data2 = selectTable2()
     return render_template("base.html",data=data, data2=data2)
+
   
 # Update route
 @app.route('/update', methods=['POST'])
