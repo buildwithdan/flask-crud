@@ -17,5 +17,7 @@ password = pg_settings['password']
 # different backend can be found here = https://docs.sqlalchemy.org/en/20/core/engines.html
 connection_string = f'postgresql+psycopg2://{user}:{password}@{host}:{port}/{dbname}'
 
+connection2 = f'postgresql://{user}:{password}@{host}:{port}/{dbname}'
+
 # Create the SQLAlchemy engine
 engine = create_engine(connection_string)

@@ -1,48 +1,81 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
-from models import createDB,insertData, readData,updateData
-from modelsV2 import selectTable, selectTable2
+from models import createDB,insertData, readData
+from modelsV2 import selectTable2, updateData
+from config import connection2
+from flask_sqlalchemy import SQLAlchemy
+import pandas as pd
 
 app = Flask(__name__)
 
-#models.py
-# createDB()
-# insertData()
-# readData()
-# updateData()
+app.config['SQLALCHEMY_DATABASE_URI'] = connection2
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Optional: Disable event system to reduce overhead
 
+db = SQLAlchemy(app)
+
+
+class bounties3(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    bounty_target = db.Column(db.String(100))
+    bounty_amount = db.Column(db.Integer)
+    bounty_hunter = db.Column(db.String(100))
+    published_date = db.Column(db.DateTime)
+    
+# this creates the table on first load of the page. 
+# If the table already exits it wont add it again.
+@app.before_first_request
+def create_tables(): 
+    db.create_all()
+    print(">>>Table created in DB")
 
 @app.route("/", methods=["POST","GET"])
 def home():
+     # persistent data 
     if request.method == "POST":
-        bountryTarget = request.form["inputBountyTarget"]
-        rowId = request.form["rowID"]
-        print(bountryTarget)
+        print(submit_form())
+        submit_data()
         
-        
-        return redirect(url_for("home"))
-    else:
-        data = selectTable()
-        data2 = selectTable2()
-    return render_template("base.html",data=data, data2=data2)
+    print("using Home()")
+    data2 = selectTable2()
+    return render_template("base.html", data2=data2)
 
-  
-# Update route
-@app.route('/update', methods=['POST'])
-def update_user():
-    row_id = request.form['id']
-    new_name = request.form['name']
-    new_email = request.form['email']
 
-    # Update the user in the database
-    user = User.query.get(row_id)
-    if row_id:
-        user.name = new_name
-        user.email = new_email
+def submit_form():
+    bounty_id = request.form["id"]
+    bounty_target = request.form["bounty_target"]
+    bounty_amount = request.form["bounty_amount"]
+    bounty_hunter = request.form["bounty_hunter"]
+    published_date = request.form["published_date"] 
+    
+    formData = (bounty_id, bounty_target, bounty_amount, bounty_hunter, published_date)
+    print(formData)
+
+def submit_data():  
+    if request.method == "POST":
+        bounty_id = request.form["id"]
+        bounty_target = request.form["bounty_target"]
+        bounty_amount = request.form["bounty_amount"]
+        bounty_hunter = request.form["bounty_hunter"]
+        published_date = request.form["published_date"]
+
+        bounty = bounties3.query.get(bounty_id)
+        if bounty:
+            bounty.bounty_target = bounty_target
+            bounty.bounty_amount = int(bounty_amount)
+            bounty.bounty_hunter = bounty_hunter
+            bounty.published_date = published_date
+        else:
+            bounty = bounties3(
+                id=bounty_id,
+                bounty_target=bounty_target,
+                bounty_amount=int(bounty_amount),
+                bounty_hunter=bounty_hunter,
+                published_date=published_date,
+            )
+        db.session.add(bounty)
         db.session.commit()
-        return "User updated successfully"
-    else:
-        return redirect(url_for("base"))
-
+        print(bounty)
+        return redirect(url_for("home"))  
+   
 
 if __name__ == '__main__':
   app.run

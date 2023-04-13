@@ -25,7 +25,7 @@
                 type="text"
                 readonly
                 class="form-control"
-                name="rowID"
+                name="id"
                 id="rowID"
                 placeholder="{{ row.id }}"
                 value="{{ row.id }}" />
@@ -37,7 +37,7 @@
               <input
                 type="text"
                 class="form-control"
-                name="inputBountyTarget"
+                name="bounty_target"
                 id="inputBountyTarget"
                 placeholder="{{ row.bounty_target }}"
                 value="{{ row.bounty_target }}" />
@@ -50,6 +50,8 @@
                 type="text"
                 class="form-control"
                 id="inputBountyAmount"
+                name="bounty_amount"
+                value="{{ row.bounty_amount }}"
                 placeholder="{{ row.bounty_amount }}" />
             </div>
           </div>
@@ -60,19 +62,21 @@
                 type="text"
                 class="form-control"
                 id="inputBountyTarget"
+                name="bounty_hunter"
                 placeholder="{{ row.bounty_hunter }}"
                 value="{{ row.bounty_hunter }}" />
             </div>
           </div>
           <div class="form-group row justify-content-between">
-            <label for="" class="col-sm-2 col-form-label">bounty_target</label>
+            <label for="" class="col-sm-2 col-form-label">published_date</label>
             <div class="col-sm-8 center">
               <input
                 type="text"
                 class="form-control"
                 id="inputBountyTarget"
-                placeholder="{{ row.bounty_target }}"
-                value="{{ row.bounty_target }}" />
+                name="published_date"
+                placeholder="{{ row.published_date }}"
+                value="{{ row.published_date }}" />
             </div>
           </div>
         </form>
