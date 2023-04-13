@@ -17,16 +17,16 @@
           aria-label="CloseTop"></button>
       </div>
       <div class="modal-body">
-        <form action="" id="editForm" method="post">
+        <form action="" id="editForm-{{ row.id }}" method="post">
           <div class="form-group row justify-content-between">
             <label for="" class="col-sm-2 col-form-label">contract_id</label>
             <div class="col-sm-8 center">
               <input
-                type="text"
+                type="number"
                 readonly
                 class="form-control"
                 name="id"
-                id="rowID"
+                id="id_id"
                 placeholder="{{ row.id }}"
                 value="{{ row.id }}" />
             </div>
@@ -38,7 +38,7 @@
                 type="text"
                 class="form-control"
                 name="bounty_target"
-                id="inputBountyTarget"
+                id="id_inputBountyTarget"
                 placeholder="{{ row.bounty_target }}"
                 value="{{ row.bounty_target }}" />
             </div>
@@ -47,9 +47,9 @@
             <label for="" class="col-sm-2 col-form-label">bounty_amount</label>
             <div class="col-sm-8 center">
               <input
-                type="text"
+                type="number"
                 class="form-control"
-                id="inputBountyAmount"
+                id="id_inputBountyAmount"
                 name="bounty_amount"
                 value="{{ row.bounty_amount }}"
                 placeholder="{{ row.bounty_amount }}" />
@@ -61,7 +61,7 @@
               <input
                 type="text"
                 class="form-control"
-                id="inputBountyTarget"
+                id="id_inputBountyTarget"
                 name="bounty_hunter"
                 placeholder="{{ row.bounty_hunter }}"
                 value="{{ row.bounty_hunter }}" />
@@ -71,9 +71,9 @@
             <label for="" class="col-sm-2 col-form-label">published_date</label>
             <div class="col-sm-8 center">
               <input
-                type="text"
+                type="date"
                 class="form-control"
-                id="inputBountyTarget"
+                id="id_published_date"
                 name="published_date"
                 placeholder="{{ row.published_date }}"
                 value="{{ row.published_date }}" />
@@ -88,7 +88,10 @@
           data-dismiss="modal">
           Close
         </button>
-        <button type="submit" class="btn btn-primary" form="editForm">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          form="editForm-{{ row.id }}">
           Save changes
         </button>
       </div>

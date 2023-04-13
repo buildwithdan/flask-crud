@@ -31,15 +31,15 @@ def create_tables():
 def home():
      # persistent data 
     if request.method == "POST":
-        print(submit_form())
+        print(postDataCheck())
         submit_data()
-        
-    print("using Home()")
+    else:    
+        print("using Home()")
     data2 = selectTable2()
     return render_template("base.html", data2=data2)
 
 
-def submit_form():
+def postDataCheck():
     bounty_id = request.form["id"]
     bounty_target = request.form["bounty_target"]
     bounty_amount = request.form["bounty_amount"]
