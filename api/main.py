@@ -1,9 +1,7 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
-from models import createDB,insertData, readData
-from modelsV2 import selectTable2, updateData
+from modelsV2 import selectTable2
 from config import connection2
 from flask_sqlalchemy import SQLAlchemy
-import pandas as pd
 
 app = Flask(__name__)
 
