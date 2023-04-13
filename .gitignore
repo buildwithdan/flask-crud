@@ -1,5 +1,7 @@
 venv
 .venv
 __pycache__
+
 .env
 .config
+__pycache__/
