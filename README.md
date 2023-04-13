@@ -26,3 +26,7 @@ Updates
 
 - need to fix the delete button
 - need to add a create button for new contracts
+
+To deploy on vercel
+
+- need to delete venv and rebuild as psycopg is causing issues.
