@@ -21,3 +21,8 @@ my_flask_app/
 ├── config.ini
 ├── requirements.txt
 ├── run.py
+
+Updates
+
+- need to fix the delete button
+- need to add a create button for new contracts
