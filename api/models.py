@@ -29,6 +29,6 @@ def updateData():
   print("Data has been updated/modified")
  
 if __name__ == '__main__':
-  createDB()
+  # createDB()
   insertData()
   
