@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 
 # Read the config.ini file
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read('configs.ini')
 
 # Get the PostgreSQL settings from the config.ini file
 pg_settings = config['database']
