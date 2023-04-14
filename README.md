@@ -2,25 +2,25 @@
 
 A started Python CRUD app, using Flask, Bootstrap, SQLite
 
-Structure of app
-my_flask_app/
-│
-├── api/
-│ ├── **init**.py #not being used
-│ ├── config.py
-│ ├── models.py
-│ ├── views.py
-│ ├── templates/
-│ │ ├── base.html
-│ │ ├── index.html
-│ │ ├── edit_row.html
-│ ├── static/
-│ │ ├── css/
-│ │ │ ├── main.css
-│
-├── config.ini
-├── requirements.txt
-├── run.py
+Structure of app   
+my_flask_app/   
+│   
+├── api/   
+│ ├── **init**.py #not being used   
+│ ├── config.py   
+│ ├── models.py   
+│ ├── views.py   
+│ ├── templates/   
+│ │ ├── base.html   
+│ │ ├── index.html   
+│ │ ├── edit_row.html   
+│ ├── static/   
+│ │ ├── css/   
+│ │ │ ├── main.css   
+│   
+├── config.ini   
+├── requirements.txt   
+├── run.py   
 
 Updates
 
