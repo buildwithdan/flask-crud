@@ -1,6 +1,15 @@
 # MandalorianBounty
 
-A started Python CRUD app, using Flask, Bootstrap, SQLite
+A starter Python CRUD app, using Flask, Bootstrap, SQLite
+
+## Updates
+
+- [] need to fix the delete button
+- [] need to add a create button for new contracts
+- [] clean up packages too big for vercel
+- [] add vercel deploy
+
+
 
 Structure of app   
 my_flask_app/   
@@ -22,11 +31,3 @@ my_flask_app/
 ├── requirements.txt   
 ├── run.py   
 
-Updates
-
-- need to fix the delete button
-- need to add a create button for new contracts
-
-To deploy on vercel
-
-- need to delete venv and rebuild as psycopg is causing issues.
