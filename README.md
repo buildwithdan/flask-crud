@@ -4,7 +4,7 @@ A starter Python CRUD app, using Flask, Bootstrap, SQLite
 
 ## Updates
 
-- [ ] need to fix the delete button
+[] need to fix the delete button
 - [ ] need to add a create button for new contracts
 - [ ] clean up packages too big for vercel
 - [ ] add vercel deploy
