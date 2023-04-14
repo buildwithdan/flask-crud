@@ -1,3 +1,8 @@
+import sys
+from pathlib import Path
+
+sys.path.append(str(Path(__file__).parent))
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from config import load_config
