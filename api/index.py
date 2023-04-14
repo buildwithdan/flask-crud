@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for
 # from modelsV2 import selectTable2
 # from config import connection2
 from flask_sqlalchemy import SQLAlchemy
@@ -27,20 +27,20 @@ class bounties3(db.Model):
     
 # this creates the table on first load of the page. 
 # If the table already exits it wont add it again.
-@app.before_first_request
-def create_tables(): 
-    db.create_all()
-    print(">>>Table created in DB")
+# @app.before_first_request
+# def create_tables(): 
+#     db.create_all()
+#     print(">>>Table created in DB")
 
 @app.route("/", methods=["POST","GET"])
 def home():
      # persistent data 
     if request.method == "POST":
-        formData = postDataCheck()
-        print(formData)
+        # formData = postDataCheck()
+        # print(formData)
         submit_data()
-    else:    
-        print("using Home()")
+       
+        # print("using Home()")
     data2 = bounties3.query.all()
     return render_template("base.html", data2=data2)
 
@@ -80,6 +80,6 @@ def submit_data():
             )
         db.session.add(bounty)
         db.session.commit()
-        print(bounty)
+        # print(bounty)
         return redirect(url_for("home"))  
    
