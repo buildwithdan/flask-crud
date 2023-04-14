@@ -1,12 +1,19 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
-from modelsV2 import selectTable2
-from config import connection2
+# from modelsV2 import selectTable2
+# from config import connection2
 from flask_sqlalchemy import SQLAlchemy
+import configparser
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = connection2
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Optional: Disable event system to reduce overhead
+# Load configuration from 'config.ini'
+config = configparser.ConfigParser()
+config.read('configs.ini')
+
+db_uri = f"postgresql://{config.get('database', 'user')}:{config.get('database', 'password')}@{config.get('database', 'host')}:{config.get('database', 'port')}/{config.get('database', 'dbname')}"
+
+app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
@@ -29,11 +36,12 @@ def create_tables():
 def home():
      # persistent data 
     if request.method == "POST":
-        print(postDataCheck())
+        formData = postDataCheck()
+        print(formData)
         submit_data()
     else:    
         print("using Home()")
-    data2 = selectTable2()
+    data2 = bounties3.query.all()
     return render_template("base.html", data2=data2)
 
 
@@ -46,6 +54,7 @@ def postDataCheck():
     
     formData = (bounty_id, bounty_target, bounty_amount, bounty_hunter, published_date)
     print(formData)
+    return formData
 
 def submit_data():  
     if request.method == "POST":
