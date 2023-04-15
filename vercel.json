@@ -2,7 +2,7 @@
   "functions": {
     "api/*": {
       "runtime": "python3.9",
-      "handler": "vercel-wsgi.wsgi_handler"
+      "entrypoint": "vercel-wsgi.wsgi_handler"
     }
   },
   "routes": [{ "src": "/api/(.*)", "dest": "/api/$1" }]
