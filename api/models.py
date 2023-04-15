@@ -1,4 +1,4 @@
-from index import db
+from app import db
 
 class Bounties(db.Model):
     id = db.Column(db.Integer, primary_key=True)

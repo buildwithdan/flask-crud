@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for
-from index import app, db
+from app import app, db
 from models import Bounties
 from datetime import datetime
 
