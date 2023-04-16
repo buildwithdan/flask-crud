@@ -6,8 +6,18 @@ from models import Bounties
 @app.before_first_request
 def create_tables():
     db.create_all()
+    
+@app.route('/', methods=['GET','POST'])
+def base():
+    data2 = Bounties.query.all()
+    
+    if request.method == "POST":
+        submit_data()
+    
+    return render_template("base.html", data2=data2)
+    
 
-@app.route('/', methods=['GET','POST',])
+@app.route('/test', methods=['GET','POST'])
 def home():
     data2 = Bounties.query.all()
     
@@ -39,5 +49,5 @@ def submit_data():
         )
     db.session.add(bounty)
     db.session.commit()
-    return redirect(url_for("home"))
+    return redirect(url_for("base"))
 
