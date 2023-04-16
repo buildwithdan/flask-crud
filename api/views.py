@@ -7,13 +7,12 @@ from models import Bounties
 def create_tables():
     db.create_all()
 
-@app.route("/", methods=["POST", "GET"])
+@app.route('/', methods=['GET','POST',])
 def home():
+    data2 = Bounties.query.all()
+    
     if request.method == "POST":
         submit_data()
-    
-    else:
-        data2 = Bounties.query.all()
     
     return render_template("base.html", data2=data2)
 
