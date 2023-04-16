@@ -6,11 +6,10 @@ from datetime import datetime
 
 @app.route("/", methods=["POST", "GET"])
 def home():
-    if request.method == "POST":
+    if request.method == request.POST:
         submit_data()
     
-    else:
-        data2 = Bounties.query.all()
+    data2 = Bounties.query.all()
     
     return render_template("base.html", data2=data2)
 
