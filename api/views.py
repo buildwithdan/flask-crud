@@ -8,7 +8,10 @@ from datetime import datetime
 def home():
     if request.method == "POST":
         submit_data()
-    data2 = Bounties.query.all()
+    
+    else:
+        data2 = Bounties.query.all()
+    
     return render_template("base.html", data2=data2)
 
 def submit_data():
