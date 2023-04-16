@@ -1,15 +1,19 @@
 from flask import render_template, request, redirect, url_for
 from app import app, db
 from models import Bounties
-from datetime import datetime
 
+
+@app.before_first_request
+def create_tables():
+    db.create_all()
 
 @app.route("/", methods=["POST", "GET"])
 def home():
     if request.method == "POST":
         submit_data()
     
-    data2 = Bounties.query.all()
+    else:
+        data2 = Bounties.query.all()
     
     return render_template("base.html", data2=data2)
 
@@ -37,3 +41,4 @@ def submit_data():
     db.session.add(bounty)
     db.session.commit()
     return redirect(url_for("home"))
+
