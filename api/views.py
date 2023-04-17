@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for
-from app import app, db
-from models import Bounties
+from api.app import app, db
+from api.models import Bounties
 
 
 @app.before_first_request
@@ -41,3 +41,4 @@ def submit_data():
     db.session.commit()
     return redirect(url_for("home"))
 
+print(app.url_map)
