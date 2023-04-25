@@ -1,15 +1,13 @@
-<!-- Edit Modal -->
-{% for row in data2 %}
 <div
   class="modal fade"
-  id="editModal-{{ row.id }}"
+  id="add_bounty_modal"
   tabindex="-1"
-  aria-labelledby="editModalLabel-{{ row.id }}"
+  aria-labelledby="add_bounty"
   aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel-{{ row.id }}">Edit Row</h5>
+        <h5 class="modal-title" id="add_bounty">Add Bounty</h5>
         <button
           type="button"
           class="btn-close"
@@ -17,21 +15,17 @@
           aria-label="CloseTop"></button>
       </div>
       <div class="modal-body">
-        <form
-          action="{{ url_for('edit_bounty') }}"
-          id="editForm-{{ row.id }}"
-          method="POST">
+        <form action="{{ url_for('add_bounty') }}" method="POST">
           <div class="form-group row justify-content-between">
             <label for="" class="col-sm-2 col-form-label">contract_id</label>
             <div class="col-sm-8 center">
               <input
                 type="number"
-                readonly
                 class="form-control"
                 name="id"
                 id="id_id"
-                placeholder="{{ row.id }}"
-                value="{{ row.id }}" />
+                placeholder="Enter contract_id"
+                hidden="true" />
             </div>
           </div>
           <div class="form-group row justify-content-between">
@@ -42,8 +36,7 @@
                 class="form-control"
                 name="bounty_target"
                 id="id_inputBountyTarget"
-                placeholder="{{ row.bounty_target }}"
-                value="{{ row.bounty_target }}" />
+                placeholder="Enter bounty_target" />
             </div>
           </div>
           <div class="form-group row justify-content-between">
@@ -54,8 +47,7 @@
                 class="form-control"
                 id="id_inputBountyAmount"
                 name="bounty_amount"
-                value="{{ row.formatted_bounty_amount }}"
-                placeholder="{{ row.formatted_bounty_amount }}" />
+                placeholder="Enter bounty_amount" />
             </div>
           </div>
           <div class="form-group row justify-content-between">
@@ -66,8 +58,7 @@
                 class="form-control"
                 id="id_inputBountyTarget"
                 name="bounty_hunter"
-                placeholder="{{ row.bounty_hunter }}"
-                value="{{ row.bounty_hunter }}" />
+                placeholder="Enter bounty_hunter" />
             </div>
           </div>
           <div class="form-group row justify-content-between">
@@ -78,27 +69,20 @@
                 class="form-control"
                 id="id_published_date"
                 name="published_date"
-                placeholder="{{ row.published_date }}"
-                value="{{ row.published_date }}" />
+                placeholder="Enter published_date" />
             </div>
           </div>
+          <div class="modal-footer">
+            <button
+              type="button-close"
+              class="btn btn-secondary"
+              data-dismiss="modal">
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary">Add Bounty</button>
+          </div>
         </form>
-      </div>
-      <div class="modal-footer">
-        <button
-          type="button-close"
-          class="btn btn-secondary"
-          data-dismiss="modal">
-          Close
-        </button>
-        <button
-          type="submit"
-          class="btn btn-primary"
-          form="editForm-{{ row.id }}">
-          Save changes
-        </button>
       </div>
     </div>
   </div>
 </div>
-{% endfor %}
