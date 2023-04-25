@@ -1,6 +1,17 @@
-<div class="container bg-light text-black">
-  <h1>Table Loop</h1>
-  <table class="table table-striped">
+<div class="container bg-dark text-black">
+  <br />
+  <h4 class="text-center text-warning">"This is the way..."</h4>
+  <div class="">
+    <button
+      type="button"
+      class="d-flex btn btn-primary btn-sm justify-content-center"
+      data-toggle="modal"
+      data-target="#add_bounty_modal">
+      Add Bounty
+    </button>
+  </div>
+
+  <table class="table table-sm table-dark">
     <thead>
       <tr>
         <th>Contract_ID</th>
@@ -16,7 +27,7 @@
       <tr>
         <td>{{ row.id }}</td>
         <td>{{ row.bounty_target }}</td>
-        <td>{{ row.bounty_amount }}</td>
+        <td>{{ "{:,.0f}".format(row.bounty_amount) }}</td>
         <td>{{ row.bounty_hunter }}</td>
         <td>{{ row.published_date }}</td>
         <td>
