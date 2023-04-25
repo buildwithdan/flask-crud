@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from api.app import app, db
 from api.models import Bounties
 from sqlalchemy import desc
@@ -42,6 +42,7 @@ def edit_bounty():
         )
     db.session.add(bounty)
     db.session.commit()
+    flash('Bounty edit saved')
     
     return redirect(url_for("home"))
 
@@ -64,7 +65,7 @@ def add_bounty():
         )
     db.session.add(bounty)
     db.session.commit()
-    
+    flash('New Bounty added')
     return redirect(url_for("home"))
 
 
@@ -73,10 +74,5 @@ def delete_bounty(id):
     bounty = Bounties.query.get_or_404(id)
     db.session.delete(bounty)
     db.session.commit()
+    flash('Bounty was deleted')
     return redirect(url_for('home'))
-
-# @app.route('/add_bounty', methods=['POST'])
-# def submit_form2():
-#     input2 = request.form['input2']
-#     print(f"Input 2: {input2}")
-#     return redirect(url_for('show_forms'))
