@@ -1,6 +1,8 @@
 {% with messages = get_flashed_messages() %} {% if messages %}
-<div id="flash-message">
-  <div class="alert alert-success">
+<div
+  class="border border-success rounded alert-success mx-auto"
+  id="flash-message">
+  <div class="text-center" role="alert">
     {% for message in messages %}
     <p>{{ message }}</p>
     {% endfor %}
