@@ -74,9 +74,3 @@ def delete_bounty(id):
     db.session.delete(bounty)
     db.session.commit()
     return redirect(url_for('home'))
-
-# @app.route('/add_bounty', methods=['POST'])
-# def submit_form2():
-#     input2 = request.form['input2']
-#     print(f"Input 2: {input2}")
-#     return redirect(url_for('show_forms'))
