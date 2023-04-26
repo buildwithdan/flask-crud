@@ -36,7 +36,7 @@ flask --debug --app api.app run
 ### Local
 Ensure to plug your database details into the api/config.ini file.
 
-###External
+### External
 if you Deploy on Vervel, ensure to add your enviroment variables on the same naming as its in the config.ini file.
 
 ### config.py
