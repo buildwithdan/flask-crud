@@ -21,12 +21,17 @@
   <body class="text-secondary">
     <br />
     <div class="container">
-      <div class="row">
+      <div class="row align-items-center">
         <div class="col">{% include "flash.html" %}</div>
         <div class="col">
           <h2 class="text-center">Mandalorian Bounties</h2>
         </div>
-        <div class="col"></div>
+        <div class="col">
+          <button type="button" class="btn btn-primary">
+            Visitors <span class="badge badge-light">{{ page_views }}</span>
+            <span class="sr-only">unread messages</span>
+          </button>
+        </div>
       </div>
     </div>
 

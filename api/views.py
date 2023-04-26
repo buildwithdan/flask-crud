@@ -1,7 +1,8 @@
 from flask import render_template, request, redirect, url_for, flash
 from api.app import app, db
-from api.models import Bounties
+from api.models import Bounties, Counter
 from sqlalchemy import desc
+from api.counter import increment_and_get_counter
 
 @app.before_first_request
 def create_tables():
@@ -10,13 +11,16 @@ def create_tables():
 @app.route('/', methods=['GET'])
 def home():    
     # all_bounties = Bounties.query.all()
+    page_views = increment_and_get_counter()
     
     sort_all_bounties = Bounties.query.order_by(desc(Bounties.bounty_amount)).all()
     
     for row in sort_all_bounties:
         row.formatted_bounty_amount = "{:,.0f}".format(row.bounty_amount)
-      
-    return render_template("base.html", data2=sort_all_bounties)
+    
+    return render_template("base.html", data2=sort_all_bounties, page_views=page_views)
+
+
 
 @app.route('/edit', methods=['POST'])
 def edit_bounty():
