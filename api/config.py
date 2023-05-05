@@ -6,7 +6,7 @@ def load_config():
     config.read('api/configs.ini')
 
     #use for local dev - remember to update the return below to => "return db_uri_local"
-    db_uri_local = f"postgresql://{config.get('database', 'user')}:{config.get('database', 'password')}@{config.get('database', 'host')}:{config.get('database', 'port')}/{config.get('database', 'dbname')}"
+    db_uri_local = f"postgresql://{config.get('database', 'user')}:{config.get('database', 'password')}@{config.get('database', 'host')}:{config.get('database', 'port')}/{config.get('database', 'dbname')}?sslmode=require"
     
     host = os.environ.get('host')
     dbname = os.environ.get('dbname')
@@ -19,5 +19,5 @@ def load_config():
     #before deploying to Vercel, ensure you have set the variables with the same names in your project
     #Vercel = https://vercel.com/docs/concepts/projects/environment-variables
     #Supabase = https://supabase.com/docs/guides/database/connecting-to-postgres#direct-connections
-    #look inside your enviroment variables and add them based on your information from Supabase.
+    #look inside your enviroment variables of your projects and add them based on your information from Supabase.
     return db_uri_external
