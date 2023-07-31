@@ -22,6 +22,7 @@ def load_config():
     #Vercel = https://vercel.com/docs/concepts/projects/environment-variables
     #Supabase = https://supabase.com/docs/guides/database/connecting-to-postgres#direct-connections
     #look inside your enviroment variables of your projects and add them based on your information from Supabase.
-    return db_uri_local
-
-    #use for local dev - remember to update the return below to => "return db_uri_local"
+    
+    return db_uri_external
+    # local development = db_uri_local
+    # when publish = db_uri_external
