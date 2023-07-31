@@ -2,12 +2,14 @@ import configparser
 import os
 
 def load_config():
+    # For Local Development
     config = configparser.ConfigParser()
     config.read('api/configs.ini')
 
     #use for local dev - remember to update the return below to => "return db_uri_local"
     db_uri_local = f"postgresql://{config.get('database', 'user')}:{config.get('database', 'password')}@{config.get('database', 'host')}:{config.get('database', 'port')}/{config.get('database', 'dbname')}?sslmode=require"
     
+    # For running Externally
     host = os.environ.get('host')
     dbname = os.environ.get('dbname')
     port = os.environ.get('port')
@@ -20,4 +22,6 @@ def load_config():
     #Vercel = https://vercel.com/docs/concepts/projects/environment-variables
     #Supabase = https://supabase.com/docs/guides/database/connecting-to-postgres#direct-connections
     #look inside your enviroment variables of your projects and add them based on your information from Supabase.
-    return db_uri_external
+    return db_uri_local
+
+    #use for local dev - remember to update the return below to => "return db_uri_local"

@@ -1,5 +1,6 @@
 from flask import render_template, request, redirect, url_for, flash
 from api.app import app, db
+from faker import Faker
 from api.models import Bounties, Counter
 from sqlalchemy import desc
 from api.counter import increment_and_get_counter
@@ -80,3 +81,21 @@ def delete_bounty(id):
     db.session.commit()
     flash('Bounty was deleted')
     return redirect(url_for('home'))
+
+@app.route('/add_fake_data', methods=['POST'])
+def add_fake_data():
+    fake = Faker()
+
+    for _ in range(5):
+        fake_bounty = Bounties(
+            bounty_target=fake.name(),
+            bounty_amount=int(fake.random_number(digits=4)),  # to generate a random number
+            bounty_hunter=fake.name(),
+            published_date=fake.date_between(start_date='-1y', end_date='today')
+        )
+        db.session.add(fake_bounty)
+
+    db.session.commit()
+
+    flash('5 fake bounties added successfully')
+    return redirect(url_for("home"))
