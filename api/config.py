@@ -1,28 +1,14 @@
-import configparser
+from dotenv import load_dotenv
 import os
 
-def load_config():
-    # For Local Development
-    config = configparser.ConfigParser()
-    config.read('api/configs.ini')
+# # Load the .env file
+dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
+load_dotenv(dotenv_path)
 
-    #use for local dev - remember to update the return below to => "return db_uri_local"
-    db_uri_local = f"postgresql://{config.get('database', 'user')}:{config.get('database', 'password')}@{config.get('database', 'host')}:{config.get('database', 'port')}/{config.get('database', 'dbname')}?sslmode=require"
-    
-    # For running Externally
-    host = os.environ.get('host')
-    dbname = os.environ.get('dbname')
-    port = os.environ.get('port')
-    user = os.environ.get('user')
-    password = os.environ.get('password')
-    
-    db_uri_external = f"postgresql://{user}:{password}@{host}:{port}/{dbname}"
-    
-    #before deploying to Vercel, ensure you have set the variables with the same names in your project
-    #Vercel = https://vercel.com/docs/concepts/projects/environment-variables
-    #Supabase = https://supabase.com/docs/guides/database/connecting-to-postgres#direct-connections
-    #look inside your enviroment variables of your projects and add them based on your information from Supabase.
-    
-    return db_uri_external
-    # local development = db_uri_local
-    # when publish = db_uri_external
+
+db_host = os.getenv('DB_HOST')
+db_username = os.getenv('DB_USERNAME')
+db_password = os.getenv('DB_PASSWORD')
+db_name = os.getenv('DB_NAME')
+db_schema = os.getenv('DB_SCHEMA')
+db_port = os.getenv('DB_PORT')

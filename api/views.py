@@ -1,80 +1,90 @@
 from flask import render_template, request, redirect, url_for, flash
-from api.app import app, db
+from app import app
 from faker import Faker
-from api.models import Bounties, Counter
+from models import *
 from sqlalchemy import desc
-from api.counter import increment_and_get_counter
+from app import db_session
 
-@app.before_first_request
-def create_tables():
-    db.create_all()
+# from api.counter import increment_and_get_counter
 
-@app.route('/', methods=['GET'])
+# @app.before_first_request
+# def start_db():
+#     setup_db()
+
+@app.route('/', methods=['GET'])   
 def home():    
-    # all_bounties = Bounties.query.all()
-    page_views = increment_and_get_counter()
+    all_bounties = db_session.query(Bounties).all()
     
-    sort_all_bounties = Bounties.query.order_by(desc(Bounties.bounty_amount)).all()
+    sort_all_bounties = db_session.query(Bounties).order_by(desc(Bounties.bounty_amount)).all()
     
     for row in sort_all_bounties:
         row.formatted_bounty_amount = "{:,.0f}".format(row.bounty_amount)
-    
-    return render_template("base.html", data2=sort_all_bounties, page_views=page_views)
+
+    return render_template("base.html", data2=sort_all_bounties)
 
 
 
 @app.route('/edit', methods=['POST'])
 def edit_bounty():
+    # Retrieve and debug print form data
     bounty_id = request.form["id"]
     bounty_target = request.form["bounty_target"]
     bounty_amount = request.form["bounty_amount"]
     bounty_hunter = request.form["bounty_hunter"]
     published_date = request.form["published_date"]
-    
-    bounty = Bounties.query.get(bounty_id)
+
+    print(f"Debug: ID - {bounty_id}, Target - {bounty_target}, Amount - {bounty_amount}, Hunter - {bounty_hunter}, Date - {published_date}")
+
+    # Query for the existing bounty using the ID
+    bounty = db_session.query(Bounties).filter(Bounties.id == bounty_id).first()
+    print(bounty)
+
     if bounty:
+        print("Debug: Bounty found, updating...")
+        # Update the existing bounty
         bounty.bounty_target = bounty_target
-        bounty.bounty_amount = int(bounty_amount)
+        bounty.bounty_amount = bounty_amount
         bounty.bounty_hunter = bounty_hunter
         bounty.published_date = published_date
+        db_session.commit()
+        flash('Bounty edit saved')
     else:
-        bounty = Bounties(
-            id=bounty_id,
-            bounty_target=bounty_target,
-            bounty_amount=int(bounty_amount),
-            bounty_hunter=bounty_hunter,
-            published_date=published_date,
-        )
-    db.session.add(bounty)
-    db.session.commit()
-    flash('Bounty edit saved')
-    
+        print("Debug: No bounty found with the ID.")
+        flash('No existing bounty found with the provided ID.')
+
     return redirect(url_for("home"))
+
 
 
 
 @app.route('/add', methods=['POST'])
 def add_bounty():
-    # bounty_id = request.form["id"]
-    bounty_target = request.form["bounty_target"]
-    bounty_amount = request.form["bounty_amount"]
-    bounty_hunter = request.form["bounty_hunter"]
-    published_date = request.form["published_date"]
-    
-    bounty = Bounties(
-            # id=bounty_id,
+    session = Session()  # Create a new session instance
+    try:
+        bounty_target = request.form["bounty_target"]
+        bounty_amount = request.form["bounty_amount"]
+        bounty_hunter = request.form["bounty_hunter"]
+        published_date = request.form["published_date"]
+
+        bounty = Bounties(
             bounty_target=bounty_target,
             bounty_amount=int(bounty_amount),
             bounty_hunter=bounty_hunter,
             published_date=published_date,
         )
-    db.session.add(bounty)
-    db.session.commit()
-    flash('New Bounty added')
+        session.add(bounty)
+        session.commit()
+        flash('New Bounty added')
+    except Exception as e:
+        session.rollback()
+        flash('Failed to add bounty')
+        logger.error("Error adding bounty", exc_info=True)
+    finally:
+        session.close()  # Close the session
     return redirect(url_for("home"))
 
 
-@app.route('/delete_bounty/<int:id>', methods=['POST'])
+@app.route('/delete_bounty/<string:id>', methods=['POST'])
 def delete_bounty(id):
     bounty = Bounties.query.get_or_404(id)
     db.session.delete(bounty)

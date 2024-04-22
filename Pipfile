@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "==2.2.5"
+flask-sqlalchemy = "==3.0.3"
+gunicorn = "==20.1.0"
+werkzeug = "==3.0.1"
+sqlalchemy = "*"
+faker = "==19.2.0"
+python-dotenv = "*"
+pyodbc = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"

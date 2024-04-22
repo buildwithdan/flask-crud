@@ -1,13 +1,22 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from api.config import load_config
+from sqlalchemy.orm import scoped_session, sessionmaker
+from models import *
 
 app = Flask(__name__)
 app.secret_key = 'eym7UHZrRpJg2Naj46zXDxUQ9'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = load_config()
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# # Configure session for use with Flask
+db_session = scoped_session(sessionmaker(bind=engine))
 
-db = SQLAlchemy(app)
+# {CRITICAL} delay import as the app first needs to be configured before doing the import. This was an annoying issue but works when here.
+from views import *
 
-import api.views
+
+@app.teardown_appcontext
+def cleanup(resp_or_exc):
+    db_session.remove()
+
+  # Ensure your views are using db_session or db as needed
+
+if __name__ == "__main__":
+    app.run(debug=True)
