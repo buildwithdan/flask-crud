@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash
 from app import app
 from faker import Faker
-from models import *
+from models import Bounties
 from sqlalchemy import desc
 from app import db_session
 
@@ -13,15 +13,13 @@ from app import db_session
 
 @app.route('/', methods=['GET'])   
 def home():    
-    all_bounties = db_session.query(Bounties).all()
-    
-    sort_all_bounties = db_session.query(Bounties).order_by(desc(Bounties.bounty_amount)).all()
-    
-    for row in sort_all_bounties:
-        row.formatted_bounty_amount = "{:,.0f}".format(row.bounty_amount)
+    sorted_bounties = db_session.query(Bounties).order_by(desc(Bounties.bounty_amount)).all()
 
-    return render_template("base.html", data2=sort_all_bounties)
+    for bounty in sorted_bounties:
+        bounty.formatted_bounty_amount = "{:,.0f}".format(bounty.bounty_amount)
 
+    return render_template("base.html", data2=sorted_bounties)
+    # 
 
 
 @app.route('/edit', methods=['POST'])
