@@ -1,13 +1,13 @@
 # MandalorianBounty
 ![visitors](https://visitor-badge.laobi.icu/badge?page_id=buildwithdan.MandalorianBounty)  
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/buildwithdan/MandalorianBounty)
+<!-- [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/buildwithdan/MandalorianBounty) -->
 
 A simple Flask Python CRUD app to understand how the basics of CRUD works with a database.   
 
 # Stack
 
 - **Framework**: [Flask](https://flask.palletsprojects.com/en/2.2.x/)
-- **Database**: [Supabase](https://supabase.com/)
+- **Database**: [AzureSQL](https://azure.microsoft.com/en-gb/)
 - **Authentication**: not applicable
 - **Deployment**: [Vercel](https://vercel.com)
 - **Styling**: [Bootstrap](https://getbootstrap.com/)

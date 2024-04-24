@@ -1,7 +1,15 @@
 <div class="container bg-dark text-black">
   <br />
-  <h4 class="text-center text-warning">"This is the way..."</h4>
-  <div class="d-flex justify-content-center">
+  
+  <div class="d-flex justify-content-between">
+    <button
+      type="disabled"
+      class="btn btn-info btn-sm"
+      data-toggle="modal"
+      data-target="">
+      Total Records: {{ tbl_count }}
+    </button>
+    <h4 class="text-center text-warning">"This is the way..."</h4>
     <button
       type="button"
       class="btn btn-primary btn-sm"
@@ -9,6 +17,7 @@
       data-target="#add_bounty_modal">
       Add Bounty
     </button>
+    
   </div>
   <br />
   <table class="table table-sm table-dark table-hover">
@@ -23,7 +32,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for row in data2 %}
+      {% for row in tbl_Data %}
       <tr>
         <td>{{ row.id }}</td>
         <td>{{ row.bounty_target }}</td>
@@ -35,15 +44,16 @@
             type="button"
             class="btn btn-primary btn-sm"
             data-toggle="modal"
-            data-target="#editModal-{{ row.id }}">
+            data-target="#modalEdit-{{ row.id }}">
             Edit
           </button>
+          
           <!-- Delete button to open the modal -->
           <button
             type="button"
             class="btn btn-danger btn-sm"
             data-toggle="modal"
-            data-target="#deleteModal-{{ row.id }}">
+            data-target="#modalDelete-{{ row.id }}">
             Delete
           </button>
         </td>

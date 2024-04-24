@@ -27,15 +27,21 @@
           <h2 class="text-center">Mandalorian Bounties</h2>
         </div>
         <div class="col">
-          <button type="button" class="btn btn-primary">
+          <!-- <button type="button" class="btn btn-info">
             Visitors <span class="badge badge-light">{{ page_views }}</span>
-            <span class="sr-only">unread messages</span>
+            <span class="sr-only">unread messages</span> -->
           </button>
           <form action="/add_fake_data" method="post">
             <input
               type="submit"
               value="Generate Fake Data"
-              class="btn btn-primary" />
+              class="btn btn-secondary" />
+          </form>
+          <form action="/delete_all" method="post">
+            <input
+              type="submit"
+              value="Remove ALL"
+              class="btn btn-danger" />
           </form>
         </div>
       </div>
