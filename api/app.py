@@ -1,6 +1,6 @@
 from flask import Flask
 from sqlalchemy.orm import scoped_session, sessionmaker
-from models import *
+from api.models import engine
 
 app = Flask(__name__)
 app.secret_key = 'eym7UHZrRpJg2Naj46zXDxUQ9'
@@ -9,7 +9,7 @@ app.secret_key = 'eym7UHZrRpJg2Naj46zXDxUQ9'
 db_session = scoped_session(sessionmaker(bind=engine))
 
 # {CRITICAL} delay import as the app first needs to be configured before doing the import. This was an annoying issue but works when here.
-from views import *
+from api.views import *
 
 
 @app.teardown_appcontext

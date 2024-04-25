@@ -1,9 +1,9 @@
 from flask import render_template, request, redirect, url_for, flash
-from app import app
 from faker import Faker
-from models import Bounties
+from api.models import Bounties
 from sqlalchemy import desc
-from app import db_session
+from api.app import app
+from api.app import db_session
 
 # from api.counter import increment_and_get_counter
 

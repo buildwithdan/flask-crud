@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, Column, Integer, String, Date, func, text, exc, Engine
 from sqlalchemy.orm import sessionmaker, declarative_base
-from config import db_host, db_name, db_password, db_port, db_schema, db_username
+from api.config import db_host, db_name, db_password, db_port, db_schema, db_username
 from sqlalchemy.engine import URL
 import uuid
 import logging
@@ -37,7 +37,7 @@ def get_engine_db(bulk: bool=True) -> Engine:
         host=db_host,
         database=db_name,
         port=db_port,
-        query={"driver": 'ODBC Driver 17 for SQL Server', "LongAsMax": "Yes"}
+        query={"driver": 'ODBC Driver 18 for SQL Server', "LongAsMax": "Yes"}
     )
     return create_engine(con_str, fast_executemany=bulk, echo=True)
 
