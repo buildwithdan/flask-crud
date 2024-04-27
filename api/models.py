@@ -37,7 +37,7 @@ def get_engine_db(bulk: bool=True) -> Engine:
         host=db_host,
         database=db_name,
         port=db_port,
-        query={"driver": 'ODBC Driver 18 for SQL Server', "LongAsMax": "Yes"}
+        query={"driver": 'ODBC Driver 17 for SQL Server', "LongAsMax": "Yes"}
     )
     return create_engine(con_str, fast_executemany=bulk, echo=True)
 

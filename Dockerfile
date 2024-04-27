@@ -1,38 +1,57 @@
-# Use the official Python image as the base image
-FROM python:3.12-slim
+# Use the official Ubuntu image as the base image
+FROM ubuntu:22.04
+
+# Set environment variables to reduce unnecessary prompts during package installation
+ENV DEBIAN_FRONTEND=noninteractive \
+    LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    PATH="/root/.local/bin:$PATH"
 
 # Set the working directory in the container
 WORKDIR /flask-crud
 
-# Install system dependencies for pyodbc and utilities
+# Install Python and necessary tools
 RUN apt-get update && apt-get install -y \
+    python3.12 \
+    python3-pip \
+    python3.12-dev \
     g++ \
     unixodbc-dev \
     gnupg \
     unixodbc \
     curl \
     libgssapi-krb5-2 \
-    # Import Microsoft GPG key
-    && curl https://packages.microsoft.com/keys/microsoft.asc | tee /etc/apt/trusted.gpg.d/microsoft.asc \
-    # Configure the Microsoft repository for Debian 11
-    && curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list \
-    # Update the package lists from repositories
-    && apt-get update \
-    # Install the latest msodbcsql and mssql-tools
-    && ACCEPT_EULA=Y apt-get install -y msodbcsql18 \
-    && ACCEPT_EULA=Y apt-get install -y mssql-tools18
+    apt-transport-https \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Configure path for mssql-tools
-ENV PATH="/opt/mssql-tools18/bin:${PATH}"
+# Update python3 and pip3 to point to the newly installed Python 3.12
+RUN ln -sf /usr/bin/python3.12 /usr/bin/python3 \
+    && ln -sf /usr/bin/python3.12 /usr/bin/python \
+    && ln -sf /usr/bin/pip3 /usr/bin/pip
 
 # Install pipenv
 RUN pip install --no-cache-dir pipenv
 
+# Import the Microsoft repository GPG keys
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+
+# Register the Microsoft SQL Server Ubuntu repository
+RUN curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
+
+# Update package lists
+RUN apt-get update
+
+# Install SQL Server drivers and tools
+RUN ACCEPT_EULA=Y apt-get install -y msodbcsql18 mssql-tools18
+
+# Configure path for mssql-tools
+ENV PATH="/opt/mssql-tools18/bin:${PATH}"
+
 # Copy Pipfile and Pipfile.lock into the container
 COPY Pipfile Pipfile.lock ./
 
-# Install dependencies using pipenv
-RUN pipenv install --ignore-pipfile
+# Install dependencies using pipenv, specifying Python version
+RUN pipenv install --ignore-pipfile --deploy --python /usr/bin/python
 
 # Copy the rest of the application code into the container
 COPY . .
