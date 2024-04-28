@@ -7,10 +7,6 @@ from api.app import db_session
 
 # from api.counter import increment_and_get_counter
 
-# @app.before_first_request
-# def start_db():
-#     setup_db()
-
 @app.route('/', methods=['GET'])   
 def home():    
     sorted_bounties = db_session.query(Bounties).order_by(desc(Bounties.bounty_amount)).all()

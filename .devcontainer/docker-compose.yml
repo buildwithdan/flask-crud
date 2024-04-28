@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile  # Points to your new Dockerfile in .devcontainer
+    volumes:
+      - ../..:/workspaces:cached
+
+    command: sleep infinity
+    network_mode: service:db
+    # ports:
+    #   - "5000:5000"  # Forward port 5000 from the container to port 5000 on the host
+
+  db:
+    image: postgres:latest
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: postgres
+    # ports:
+    #   - "5432:5432"  # Forward port 5432 for PostgreSQL
+
+volumes:
+  postgres-data:

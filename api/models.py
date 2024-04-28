@@ -9,6 +9,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 # Database models
 Base = declarative_base()
 
@@ -29,41 +30,42 @@ class Counter(Base):
     count = Column(Integer, default=0)
     last_updated = Column(Date, default=func.now())
 
+# def get_engine_db(bulk: bool=True) -> Engine:
+#     con_str = URL.create(
+#         "mssql+pyodbc",
+#         username=db_username,
+#         password=db_password,
+#         host=db_host,
+#         database=db_name,
+#         port=db_port,
+#         query={"driver": 'ODBC Driver 17 for SQL Server', "LongAsMax": "Yes"}
+#     )
+#     return create_engine(con_str, fast_executemany=bulk, echo=True)
+
 def get_engine_db(bulk: bool=True) -> Engine:
     con_str = URL.create(
-        "mssql+pyodbc",
-        username=db_username,
-        password=db_password,
-        host=db_host,
-        database=db_name,
-        port=db_port,
-        query={"driver": 'ODBC Driver 17 for SQL Server', "LongAsMax": "Yes"}
+        "postgresql+psycopg2",  # Database dialect and driver
+        username=db_username,    # Database username
+        password=db_password,    # Database password
+        host=db_host,              # Use the Docker service name as the host
+        database=db_name,    # Database name
+        port=db_port            # Default PostgreSQL port
     )
-    return create_engine(con_str, fast_executemany=bulk, echo=True)
+    return create_engine(con_str, echo=True)
+
 
 engine = get_engine_db()
 
+
+
 def create_schema(engine, db_schema):
-    # Create a connection from the engine
     with engine.connect() as connection:
         # Begin a new transaction
         trans = connection.begin()
         try:
-            # Execute the SQL command using the connection
+            # Execute the SQL command to create schema if it does not exist
             connection.execute(
-                text(
-                    f"""
-                    IF NOT EXISTS (
-                        SELECT schema_name 
-                        FROM information_schema.schemata 
-                        WHERE schema_name = :db_schema
-                    )
-                    BEGIN 
-                        EXEC('CREATE SCHEMA {db_schema}')
-                    END;
-                    """
-                ),
-                {"db_schema": db_schema}
+                text(f"CREATE SCHEMA IF NOT EXISTS {db_schema};")
             )
             # Commit the transaction
             trans.commit()
