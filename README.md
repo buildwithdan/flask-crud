@@ -13,15 +13,6 @@ A simple Flask Python CRUD app to understand how the basics of CRUD works with a
 - **Styling**: [Bootstrap](https://getbootstrap.com/)
 - **Analytics**: not applicable
 
-
-## To do:
-
-- [x] need to fix the delete button
-- [x] Add a create button for new contracts
-- [x] Flash for add and delete
-- [x] add vercel deploy
-- [x] database variables to be kept outside of github (for now it uses a public DB created on supabase, so risk limited)
-
 ## Running Locally
 
 This application requires the latest python and flask to be installed.
