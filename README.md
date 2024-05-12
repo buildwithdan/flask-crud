@@ -15,6 +15,37 @@ A simple Flask Python CRUD app to understand how the basics of CRUD works with a
 
 ## Running Locally
 
+Use the .devcontainer to run the program inside of .devcontainer.
+
+```bash Docker Compuse
+version: '3.8'
+
+services:
+  app:
+    image: buildwithdan/flask-crud:latest  # Assuming this is the image with everything set up
+    restart: unless-stopped
+    ports:
+      - "5100:5000"  # Exposing the Flask app on port 5100 externally. Reminder the logic is HOST:CONTAINER. The container port has to be 5000 as the build image we set it as 5000 in the dockerfile.
+
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: postgres  # Make sure to use secure passwords in production
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres-data:
+```
+
 This application requires the latest python and flask to be installed.
 
 ```bash
@@ -23,12 +54,4 @@ cd flask-crud
 flask --debug --app api.app run
 ```
 
-## Enviroment Variables
-### Local
-Ensure to plug your database details into the api/config.ini file.
-
-### External
-if you Deploy on Vervel, ensure to add your enviroment variables on the same naming as its in the config.ini file.
-
-### config.py
-have a look at the inside and just change the return value to local if you want to develop locally and then just flip it to external if you want it to work on Vercel.
+docker-compose.yml
