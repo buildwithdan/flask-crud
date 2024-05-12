@@ -7,7 +7,7 @@ A simple Flask Python CRUD app to understand how the basics of CRUD works with a
 # Stack
 
 - **Framework**: [Flask](https://flask.palletsprojects.com/en/2.2.x/)
-- **Database**: [AzureSQL](https://azure.microsoft.com/en-gb/)
+- **Database**: [Postgres](https://www.postgresql.org/)
 - **Authentication**: not applicable
 - **Deployment**: [Vercel](https://vercel.com)
 - **Styling**: [Bootstrap](https://getbootstrap.com/)
@@ -27,8 +27,8 @@ A simple Flask Python CRUD app to understand how the basics of CRUD works with a
 This application requires the latest python and flask to be installed.
 
 ```bash
-git clone https://github.com/buildwithdan/MandalorianBounty.git
-cd MandalorianBounty
+git clone https://github.com/buildwithdan/flask-crud
+cd flask-crud
 flask --debug --app api.app run
 ```
 
